@@ -1,5 +1,7 @@
 import { Moon, Sun } from 'Icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { filterByName } from 'store/actions/productActions';
 import styled from 'styled-components';
 
 interface HeaderProps {
@@ -7,6 +9,9 @@ interface HeaderProps {
   setTheme: (value: string) => void;
 }
 const Header = ({ theme, setTheme }: HeaderProps) => {
+  const [inputValue, setInputValue] = useState('');
+  const dispatch = useDispatch();
+
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
     localStorage.setItem('theme', theme);
@@ -15,11 +20,24 @@ const Header = ({ theme, setTheme }: HeaderProps) => {
     const localTheme = localStorage.getItem('theme');
     localTheme === 'light' ? setTheme('dark') : setTheme('light');
   }, [setTheme]);
+
+  const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value);
+    dispatch(filterByName(e.currentTarget.value));
+  };
   return (
     <Wrapper>
       <section>
         <Name>Ömer's market</Name>
       </section>
+      <Input
+        type="search"
+        name=""
+        id=""
+        value={inputValue}
+        onChange={handleSearch}
+      />
+
       <RightMenu>
         <Navigation>favoriler</Navigation>
         <Navigation>basket</Navigation>
@@ -44,7 +62,7 @@ const Wrapper = styled.div`
   padding: 30px;
 `;
 const RightMenu = styled.section`
-  width: 40%;
+  width: 20%;
   display: flex;
   justify-content: space-between;
 `;
@@ -58,4 +76,12 @@ const Name = styled.h1`
   color: ${(p) => p.theme.fontColor};
   font-family: 'Licorice', cursive;
   font-size: 40px;
+`;
+
+const Input = styled.input`
+  border: none;
+  width: 300px;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
 `;

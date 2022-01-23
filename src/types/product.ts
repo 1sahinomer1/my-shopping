@@ -10,6 +10,7 @@ export interface Product {
   manufacturer: string;
   itemType: string;
 }
+
 export interface ProductState {
   data: Product[];
   message: string;
@@ -22,6 +23,13 @@ interface GET_PRODUCTS_SUCCESS {
 interface GET_PRODUCTS_ERROR {
   type: 'GET_PRODUCTS_ERROR';
 }
+interface FILTER_BY_NAME {
+  type: 'FILTER_BY_NAME';
+  payload: string;
+}
 
-export type ProductAction = GET_PRODUCTS_ERROR | GET_PRODUCTS_SUCCESS;
+export type ProductAction =
+  | GET_PRODUCTS_ERROR
+  | GET_PRODUCTS_SUCCESS
+  | FILTER_BY_NAME;
 export type ProductDispatch = ThunkDispatch<ProductState, any, ProductAction>;

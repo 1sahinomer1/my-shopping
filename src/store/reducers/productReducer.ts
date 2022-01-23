@@ -15,6 +15,20 @@ const productReducer = (
         ...state,
         data: action.payload,
       };
+    case 'FILTER_BY_NAME':
+      if (action.payload === '') {
+        return {
+          ...state,
+          data: state.data,
+        };
+      } else {
+        return {
+          ...state,
+          data: state.data.filter((product) =>
+            product.name.trim().toLowerCase().includes(action.payload)
+          ),
+        };
+      }
 
     default:
       return state;
