@@ -9,7 +9,7 @@ const Pagination = () => {
   const [currentItems, setCurrentItems] = useState<Product[]>();
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const data = useSelector((state: AppState) => state.products.data);
+  const data = useSelector((state: AppState) => state.products.filteredData);
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * 16) % data.length;
