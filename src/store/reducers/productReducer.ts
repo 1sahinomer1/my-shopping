@@ -5,6 +5,7 @@ const defaultState: ProductState = {
   filteredData: [],
   basket: [],
   message: 'omer',
+  favorites: JSON.parse(localStorage.getItem('favorites') || '[]') || [],
 };
 
 const productReducer = (
@@ -13,6 +14,13 @@ const productReducer = (
 ) => {
   switch (action.type) {
     case 'GET_PRODUCTS_SUCCESS':
+      action.payload.forEach((getProduct) =>
+        state.favorites.forEach((favoriteProduct) => {
+          if (getProduct.added === favoriteProduct.added) {
+            getProduct.isFavorite = true;
+          }
+        })
+      );
       return {
         ...state,
         data: action.payload,
@@ -44,6 +52,63 @@ const productReducer = (
                 : basketItem
             )
           : [...state.basket, { ...action.payload, count: 1 }],
+      };
+    case 'INCREASE_BASKET_ITEM':
+      return {
+        ...state,
+        basket: state.basket.map((basketItem) =>
+          basketItem.added === action.payload.added
+            ? {
+                ...basketItem,
+                count: basketItem.count > 0 ? basketItem.count + 1 : 1,
+              }
+            : basketItem
+        ),
+      };
+    case 'DECREASE_BASKET_ITEM':
+      return {
+        ...state,
+        basket: state.basket.map((product) =>
+          product.added === action.payload.added
+            ? {
+                ...product,
+                count: product.count > 1 ? product.count - 1 : 1,
+              }
+            : product
+        ),
+      };
+    case 'DELETE_BASKET_ITEM':
+      return {
+        ...state,
+        basket: state.basket.filter(
+          (product) => product.added !== action.payload.added
+        ),
+      };
+    case 'ADD_FAVORITE':
+      return {
+        ...state,
+        filteredData: state.filteredData.map((product) =>
+          product.added === action.payload.added
+            ? { ...product, isFavorite: true }
+            : product
+        ),
+        favorites: state.favorites.find(
+          (product) => product.added === action.payload.added
+        )
+          ? state.favorites
+          : [...state.favorites, { ...action.payload, isFavorite: true }],
+      };
+    case 'REMOVE_FAVORITE':
+      return {
+        ...state,
+        favorites: state.favorites.filter(
+          (product) => product.added !== action.payload.added
+        ),
+        filteredData: state.filteredData.map((product) =>
+          product.added === action.payload.added
+            ? { ...product, isFavorite: false }
+            : product
+        ),
       };
     default:
       return state;

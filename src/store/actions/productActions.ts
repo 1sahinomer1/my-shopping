@@ -21,3 +21,28 @@ export const addBasket = (value: Product) => (dispatch: ProductDispatch) => {
     payload: value,
   });
 };
+export const increaseItem = (value: Product) => (dispatch: ProductDispatch) => {
+  dispatch({
+    type: 'INCREASE_BASKET_ITEM',
+    payload: value,
+  });
+};
+export const decreaseItem = (value: Product) => (dispatch: ProductDispatch) => {
+  dispatch({
+    type: 'DECREASE_BASKET_ITEM',
+    payload: value,
+  });
+};
+export const deleteItem = (value: Product) => (dispatch: ProductDispatch) => {
+  dispatch({
+    type: 'DELETE_BASKET_ITEM',
+    payload: value,
+  });
+};
+export const addFavorite = (value: Product) => (dispatch: ProductDispatch) => {
+  dispatch({ type: 'ADD_FAVORITE', payload: value });
+};
+export const removeFavorite =
+  (value: Product) => (dispatch: ProductDispatch) => {
+    dispatch({ type: 'REMOVE_FAVORITE', payload: value });
+  };
