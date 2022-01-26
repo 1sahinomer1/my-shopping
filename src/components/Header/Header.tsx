@@ -47,8 +47,10 @@ const Header = ({ theme, setTheme }: HeaderProps) => {
       <RightMenu>
         <Navigation>favoriler</Navigation>
         <Link to="/basket">
-          <AiOutlineShoppingCart size={'2em'} />
-          {basket.length}
+          <IconWrapper>
+            <ShoppingIcon size={'2.5em'} />
+            <BasketCount>{basket.length}</BasketCount>
+          </IconWrapper>
         </Link>
         <ToggleTheme onClick={themeToggler}>
           {theme === 'dark' ? <Sun /> : <Moon />}
@@ -73,6 +75,7 @@ const RightMenu = styled.section`
   width: 20%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 const Navigation = styled.a`
   color: ${(p) => p.theme.fontColor};
@@ -94,4 +97,19 @@ const Input = styled.input`
   border-radius: 5px;
   outline: none;
   padding: 10px;
+`;
+const IconWrapper = styled.div`
+  position: relative;
+`;
+const ShoppingIcon = styled(AiOutlineShoppingCart)`
+  color: ${(p) => p.theme.fontColor};
+`;
+const BasketCount = styled.span`
+  color: ${(p) => p.theme.fontColor};
+  position: absolute;
+  font-size: 12px;
+  font-weight: 800;
+  top: 0;
+  left: 0;
+  margin: 8px 20px;
 `;
