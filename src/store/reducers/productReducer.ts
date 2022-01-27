@@ -4,7 +4,7 @@ const defaultState: ProductState = {
   data: [],
   filteredData: [],
   basket: [],
-  message: 'omer',
+  sort: '',
   favorites: JSON.parse(localStorage.getItem('favorites') || '[]') || [],
 };
 
@@ -110,6 +110,54 @@ const productReducer = (
             : product
         ),
       };
+    case 'SORT_PRODUCTS':
+      if (action.payload === 'low to high') {
+        return {
+          ...state,
+          filteredData: state.data.sort((a, b) => a.price - b.price),
+        };
+      } else if (action.payload === 'high to low') {
+        return {
+          ...state,
+          filteredData: state.data.sort((a, b) => b.price - a.price),
+        };
+      } else if (action.payload === 'new to old') {
+        return {
+          ...state,
+          filteredData: state.data.sort((a, b) => a.added - b.added),
+        };
+      } else if (action.payload === 'old to new') {
+        return {
+          ...state,
+          filteredData: state.data.sort((a, b) => b.added - a.added),
+        };
+      }
+      return {
+        ...state,
+        filteredData: state.data,
+      };
+    case 'TYPE_PRODUCT':
+      if (action.payload === 'mug') {
+        return {
+          ...state,
+          filteredData: state.data.filter(
+            (product) => product.itemType === 'mug'
+          ),
+        };
+      } else if (action.payload === 'shirt') {
+        return {
+          ...state,
+          filteredData: state.data.filter(
+            (product) => product.itemType === 'shirt'
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          filteredData: state.data,
+        };
+      }
+
     default:
       return state;
   }

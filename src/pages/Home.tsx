@@ -1,4 +1,4 @@
-import { Pagination } from 'components';
+import { Filter, Pagination } from 'components';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getProductsAll } from 'store/actions/productActions';
@@ -9,11 +9,11 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getProductsAll());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Wrapper>
-      <p>filter</p>
+      <Filter />
       <Pagination />
     </Wrapper>
   );

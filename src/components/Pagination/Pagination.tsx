@@ -9,18 +9,18 @@ const Pagination = () => {
   const [currentItems, setCurrentItems] = useState<Product[]>();
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const data = useSelector((state: AppState) => state.products.filteredData);
+  const { filteredData } = useSelector((state: AppState) => state.products);
 
   const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * 16) % data.length;
+    const newOffset = (event.selected * 16) % filteredData.length;
     setItemOffset(newOffset);
   };
 
   useEffect(() => {
     const endOffset = itemOffset + 16;
-    setCurrentItems(data.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data.length / 16));
-  }, [data, itemOffset]);
+    setCurrentItems(filteredData.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredData.length / 16));
+  }, [filteredData, itemOffset]);
   return (
     <div>
       <Products data={currentItems} />

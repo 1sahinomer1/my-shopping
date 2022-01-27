@@ -17,7 +17,7 @@ export interface ProductState {
   data: Product[];
   filteredData: Product[];
   basket: Product[];
-  message: string;
+  sort: string;
   favorites: Product[];
 }
 
@@ -56,6 +56,14 @@ interface REMOVE_FAVORITE {
   type: 'REMOVE_FAVORITE';
   payload: Product;
 }
+interface SORT_PRODUCTS {
+  type: 'SORT_PRODUCTS';
+  payload: string;
+}
+interface TYPE_PRODUCT {
+  type: 'TYPE_PRODUCT';
+  payload: string;
+}
 
 export type ProductAction =
   | GET_PRODUCTS_ERROR
@@ -66,5 +74,7 @@ export type ProductAction =
   | DECREASE_BASKET_ITEM
   | DELETE_BASKET_ITEM
   | ADD_FAVORITE
-  | REMOVE_FAVORITE;
+  | REMOVE_FAVORITE
+  | SORT_PRODUCTS
+  | TYPE_PRODUCT;
 export type ProductDispatch = ThunkDispatch<ProductState, any, ProductAction>;

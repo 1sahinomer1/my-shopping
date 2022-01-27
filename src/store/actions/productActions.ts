@@ -46,3 +46,9 @@ export const removeFavorite =
   (value: Product) => (dispatch: ProductDispatch) => {
     dispatch({ type: 'REMOVE_FAVORITE', payload: value });
   };
+export const sortProducts = (value: string) => (dispatch: ProductDispatch) => {
+  dispatch({ type: 'SORT_PRODUCTS', payload: value });
+};
+export const typeProducts = (value: string) => (dispatch: ProductDispatch) => {
+  dispatch({ type: 'TYPE_PRODUCT', payload: value });
+};
