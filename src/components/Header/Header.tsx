@@ -42,6 +42,7 @@ const Header = ({ theme, setTheme }: HeaderProps) => {
         id=""
         value={inputValue}
         onChange={handleSearch}
+        data-testid="searchInput"
       />
 
       <RightMenu>

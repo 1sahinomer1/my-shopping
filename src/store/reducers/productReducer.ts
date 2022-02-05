@@ -4,7 +4,7 @@ const defaultState: ProductState = {
   data: [],
   filteredData: [],
   basket: [],
-  sort: '',
+  sort: 'low to high',
   favorites: JSON.parse(localStorage.getItem('favorites') || '[]') || [],
 };
 
@@ -23,7 +23,7 @@ const productReducer = (
       );
       return {
         ...state,
-        data: action.payload,
+        data: action.payload.sort((a, b) => a.price - b.price),
         filteredData: action.payload,
       };
     case 'FILTER_BY_NAME':
@@ -111,22 +111,23 @@ const productReducer = (
         ),
       };
     case 'SORT_PRODUCTS':
-      if (action.payload === 'low to high') {
+      state.sort = action.payload;
+      if (state.sort === 'low to high') {
         return {
           ...state,
           filteredData: state.data.sort((a, b) => a.price - b.price),
         };
-      } else if (action.payload === 'high to low') {
+      } else if (state.sort === 'high to low') {
         return {
           ...state,
           filteredData: state.data.sort((a, b) => b.price - a.price),
         };
-      } else if (action.payload === 'new to old') {
+      } else if (state.sort === 'new to old') {
         return {
           ...state,
           filteredData: state.data.sort((a, b) => a.added - b.added),
         };
-      } else if (action.payload === 'old to new') {
+      } else if (state.sort === 'old to new') {
         return {
           ...state,
           filteredData: state.data.sort((a, b) => b.added - a.added),

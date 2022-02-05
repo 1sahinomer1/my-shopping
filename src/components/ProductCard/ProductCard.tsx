@@ -22,7 +22,7 @@ const ProductCard = ({ product }: props) => {
   };
   localStorage.setItem('favorites', JSON.stringify(favorites));
   return (
-    <ProductCardContainer>
+    <ProductCardContainer data-testid="product">
       <ImageWrapper>
         <img src="watches.png" alt="" />
       </ImageWrapper>
