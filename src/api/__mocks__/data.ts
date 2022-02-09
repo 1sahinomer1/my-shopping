@@ -1,7 +1,5 @@
-import {
-  mockCompainesResponseData,
-  mockProductResponseData,
-} from 'api/mockData';
+import mockCompainesResponseData from 'api/mockData/compaines';
+import mockProductResponseData from 'api/mockData/product';
 
 export const getData = () => {
   return new Promise((resolve) => resolve(mockProductResponseData));

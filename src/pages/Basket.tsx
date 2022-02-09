@@ -1,34 +1,34 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from 'store';
 import { BsPlusCircleFill } from 'react-icons/bs';
-import {
-  decreaseItem,
-  deleteItem,
-  increaseItem,
-} from 'store/actions/productActions';
+
 import styled from 'styled-components';
 import { Product } from 'types/product';
 import { AiFillDelete, AiFillMinusCircle } from 'react-icons/ai';
 import { findTotalPrice } from 'utils/findTotalPrice';
+import { useAppDispatch, useAppSelector } from 'store';
+import {
+  decreaseBasketItem,
+  deleteBasketItem,
+  icreaseBasketItem,
+} from 'features/productSlice';
 
 const Basket = () => {
-  const basket = useSelector((state: AppState) => state.products.basket);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const basket = useAppSelector((state) => state.products.basket);
   let totalCount = findTotalPrice(basket);
 
   const deleteEmptyItem = (basketItem: Product) => {
     if (basketItem.count > 1) {
-      dispatch(decreaseItem(basketItem));
+      dispatch(decreaseBasketItem(basketItem));
     } else {
-      dispatch(deleteItem(basketItem));
+      dispatch(deleteBasketItem(basketItem));
     }
   };
 
   return (
     <BasketPageContainer>
       <BasketContainer>
-        {basket.map((basketItem) => (
-          <Wrapper>
+        {basket.map((basketItem, key) => (
+          <Wrapper key={key}>
             <ItemSection>
               <ImageWrapper>
                 <img src="watches.png" alt="" />
@@ -50,7 +50,7 @@ const Basket = () => {
                 size={'1.5em'}
                 color="#8FC1D4"
                 onClick={() => {
-                  dispatch(increaseItem(basketItem));
+                  dispatch(icreaseBasketItem(basketItem));
                 }}
               >
                 +
@@ -69,7 +69,7 @@ const Basket = () => {
                 size={'1.5em'}
                 color="#DA1212"
                 onClick={() => {
-                  dispatch(deleteItem(basketItem));
+                  dispatch(deleteBasketItem(basketItem));
                 }}
               >
                 delete

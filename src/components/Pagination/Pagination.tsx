@@ -1,17 +1,14 @@
 import { Products } from 'components';
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { useSelector } from 'react-redux';
-import { AppState } from 'store';
+import { useAppSelector } from 'store';
 import { Product } from 'types/product';
 
 const Pagination = () => {
   const [currentItems, setCurrentItems] = useState<Product[]>();
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const { filteredData, sort } = useSelector(
-    (state: AppState) => state.products
-  );
+  const { filteredData, sort } = useAppSelector((state) => state.products);
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * 16) % filteredData.length;
@@ -25,7 +22,7 @@ const Pagination = () => {
   }, [filteredData, itemOffset, sort]);
   return (
     <div>
-      <Products data={currentItems} />
+      {currentItems && <Products data={currentItems} />}
       <ReactPaginate
         nextLabel="next >"
         onPageChange={handlePageClick}

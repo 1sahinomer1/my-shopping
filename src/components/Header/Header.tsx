@@ -1,21 +1,20 @@
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Moon, Sun } from 'Icons';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppState } from 'store';
-import { filterByName } from 'store/actions/productActions';
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from 'store';
+import { filterByName } from 'features/productSlice';
 
 interface HeaderProps {
   theme: string;
   setTheme: (value: string) => void;
 }
 const Header = ({ theme, setTheme }: HeaderProps) => {
-  const { basket } = useSelector((state: AppState) => state.products);
+  const { basket } = useAppSelector((state) => state.products);
+  const dispatch = useAppDispatch();
 
   const [inputValue, setInputValue] = useState('');
-  const dispatch = useDispatch();
 
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
@@ -32,9 +31,7 @@ const Header = ({ theme, setTheme }: HeaderProps) => {
   return (
     <Wrapper>
       <section>
-        <Link to="/">
-          <Name>Ömer's market</Name>
-        </Link>
+        <StyledNameLink to="/">Ömer's market</StyledNameLink>
       </section>
       <Input
         type="search"
@@ -85,7 +82,7 @@ const Navigation = styled.a`
 const ToggleTheme = styled.div`
   cursor: pointer;
 `;
-const Name = styled.a`
+const StyledNameLink = styled(Link)`
   color: ${(p) => p.theme.fontColor};
   font-family: 'Licorice', cursive;
   font-size: 40px;

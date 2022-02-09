@@ -1,8 +1,5 @@
-import {
-  mockCompainesResponseData,
-  mockProductResponseData,
-} from 'api/mockData';
-
+import mockCompainesResponseData from 'api/mockData/compaines';
+import mockProductResponseData from 'api/mockData/product';
 import { API, getCompaines, getData } from 'api/product';
 
 import MockAdapter from 'axios-mock-adapter';

@@ -1,11 +1,11 @@
-import { Star } from 'Icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from 'store';
 import {
-  addBasket,
+  addBasketItem,
   addFavorite,
   removeFavorite,
-} from 'store/actions/productActions';
+} from 'features/productSlice';
+import { Star } from 'Icons';
+import { useAppDispatch, useAppSelector } from 'store';
+// import { AppState } from 'store';
 import styled from 'styled-components';
 
 import { Product } from 'types/product';
@@ -15,10 +15,12 @@ type props = {
 };
 
 const ProductCard = ({ product }: props) => {
-  const dispatch = useDispatch();
-  const favorites = useSelector((state: AppState) => state.products.favorites);
+  const dispatch = useAppDispatch();
+
+  const favorites = useAppSelector((state) => state.products.favorites);
+
   const addItemBasket = (product: Product) => {
-    dispatch(addBasket(product));
+    dispatch(addBasketItem(product));
   };
   localStorage.setItem('favorites', JSON.stringify(favorites));
   return (

@@ -4,8 +4,7 @@ export const API = axios.create({
   baseURL: 'https://my-shopping-json-server.herokuapp.com/',
 });
 export const getData = async () => {
-  const res = await API.get('items');
-  const data = res.data;
+  const { data } = await API.get('items');
   return data;
 };
 export const getCompaines = async () => {

@@ -1,15 +1,21 @@
+import { getData } from 'api/product';
 import { Filter, Pagination } from 'components';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getProductsAll } from 'store/actions/productActions';
+import { setProducts } from 'features/productSlice';
+import { useCallback, useEffect } from 'react';
+import { useAppDispatch } from 'store';
 import styled from 'styled-components';
 
 const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const getAllProducts = useCallback(async () => {
+    const getItems = await getData();
+    if (getItems) dispatch(setProducts(getItems));
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getProductsAll());
-  }, [dispatch]);
+    getAllProducts();
+  }, [getAllProducts]);
 
   return (
     <Wrapper>

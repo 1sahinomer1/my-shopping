@@ -1,11 +1,11 @@
+import { sortProducts, sortTypeProducts } from 'features/productSlice';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { sortProducts, typeProducts } from 'store/actions/productActions';
+import { useAppDispatch } from 'store';
 
 const Filter = () => {
   const [sortPrice, setSortPrice] = useState('low to high');
   const [productType, setProductType] = useState('mug');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleRadio = (e: any) => {
     setSortPrice(e.target.value);
@@ -69,7 +69,7 @@ const Filter = () => {
       <button
         onClick={() => {
           setProductType('mug');
-          dispatch(typeProducts('mug'));
+          dispatch(sortTypeProducts('mug'));
         }}
       >
         mug
@@ -77,7 +77,7 @@ const Filter = () => {
       <button
         onClick={() => {
           setProductType('shirt');
-          dispatch(typeProducts('shirt'));
+          dispatch(sortTypeProducts('shirt'));
         }}
       >
         shirt
